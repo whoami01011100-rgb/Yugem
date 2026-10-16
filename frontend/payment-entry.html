@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yugem Advisory - New Payment Entry</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- <base target="_blank"> -->
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <!-- MSME YUGEM LOGO -->
+            <div class="sidebar-logo-image">
+                <img src="images/msme-yugem-logo.jpeg" alt="MSME YUGEM" draggable="false" oncontextmenu="return false;">
+            </div>
+
+            <nav class="sidebar-menu">
+
+                <a href="payment-entry.html" class="active">
+                    <span>＋</span>
+                    <span>New Payment</span>
+                </a>
+
+                <a href="index.html">
+                    <span>▣</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="payment-entries.html">
+                    <span>▤</span>
+                    <span>Payment Entries</span>
+                </a>
+
+                <a href="report.html">
+                    <span>▥</span>
+                    <span>Reports</span>
+                </a>
+
+                <a href="login.html" class="logout-btn">
+                    <span>↪</span>
+                    <span>Logout</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MOBILE SIDEBAR OVERLAY
+        ====================================================== -->
+
+        <div id="sidebarOverlay"
+            style="display:none; position:fixed; inset:0; background:rgba(10,31,51,0.5); z-index:999;"
+            onclick="document.getElementById('sidebar').classList.remove('active'); this.style.display='none';">
+        </div>
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+        ====================================================== -->
+
+        <main class="main-content">
+
+            <!-- TOP HEADER -->
+
+            <header class="top-header">
+
+                <div class="top-header-left">
+
+                    <button type="button" class="menu-toggle" id="menuToggle">
+                        ☰
+                    </button>
+
+                    <h2>New Payment Entry</h2>
+
+                </div>
+
+
+                <div class="top-header-right">
+
+                    <div class="user-icon">
+                        👤
+                    </div>
+
+                    <span class="user-name" id="headerUserName">
+                        BDE User
+                    </span>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <div class="content-wrapper">
+
+                <!-- PAGE BANNER -->
+
+                <div class="page-banner">
+
+                    <h2>
+                        New <span class="banner-gold">Payment Entry</span>
+                    </h2>
+
+                    <p>
+                        Fill in the client, lead and payment details below to create a new entry.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     PAYMENT FORM
+                ================================================== -->
+
+                <form id="paymentForm" class="payment-form" enctype="multipart/form-data">
+
+
+                    <!-- =================================================
+                         STEP 1 - BDE DETAILS
+                    ================================================= -->
+
+                    <section class="form-section">
+
+                        <div class="form-section-title">
+
+                            <span class="section-number">
+                                1
+                            </span>
+
+                            <span>
+                                BDE Details
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <!-- BDE NAME -->
+
+                            <div class="form-group">
+
+                                <label for="bdeName">
+                                    BDE Name
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input type="text" id="bdeName" name="bde_name" placeholder="Enter BDE Name"
+                                    required>
+
+                            </div>
+
+                            <!-- BDE CONTACT -->
+
+                            <div class="form-group">
+
+                                <label for="bdeContact">
+                                    BDE Contact Number
+                                </label>
+
+                                <input type="tel" id="bdeContact" name="bde_contact" placeholder="Contact Number">
+
+                            </div>
+
+
+                            <!-- DATE & TIME -->
+
+                            <div class="form-group">
+
+                                <label>
+                                    Date &amp; Time
+                                </label>
+
+                                <div class="date-time-grid">
+
+                                    <input type="text" id="paymentDate" name="payment_date" readonly
+                                        class="readonly-field">
+
+                                    <input type="text" id="paymentTime" name="payment_time" readonly
+                                        class="readonly-field">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         STEP 2 - CLIENT DETAILS
+                    ================================================== -->
+
+                    <section class="form-section">
+
+                        <div class="form-section-title">
+
+                            <span class="section-number">
+                                2
+                            </span>
+
+                            <span>
+                                Client Details
+                            </span>
+
+                        </div>
+
+
+                    <div class="form-grid">
+                    
+                    
+                        <!-- CLIENT NAME -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="clientName">
+                                Client Name
+                                <span class="required">*</span>
+                            </label>
+                    
+                            <input type="text" id="clientName" name="client_name" placeholder="Enter client name" required>
+                    
+                        </div>
+                    
+                    
+                        <!-- CONTACT -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="contactNumber">
+                                Contact Number
+                                <span class="required">*</span>
+                            </label>
+                    
+                            <input type="tel" id="contactNumber" name="contact_number" placeholder="Enter contact number">
+                    
+                        </div>
+                    
+                    
+                        <!-- EMAIL -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="emailAddress">
+                                Email Address
+                            </label>
+                    
+                            <input type="email" id="emailAddress" name="email_address" placeholder="Enter email address">
+                    
+                        </div>
+                    
+                    
+                        <!-- COMPANY -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="companyName">
+                                Company / Business Name
+                                <span class="required">*</span>
+                            </label>
+                    
+                            <input type="text" id="companyName" name="company_name" placeholder="Enter company name">
+                    
+                        </div>
+                    
+                    
+                        <!-- PAN CARD -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="panCard">
+                                PAN Card
+                                <!-- <span class="required">*</span> -->
+                            </label>
+                    
+                            <input type="text" id="panCard" name="bde_pan" placeholder="ENTER PAN CARD NUMBER" maxlength="10" minlength="10"
+                                autocomplete="off" style="text-transform:uppercase;">
+                    
+                        </div>
+                    
+                    
+                        <!-- GST NUMBER -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="gstNumber">
+                                GST Number
+                            </label>
+                    
+                            <input type="text" id="gstNumber" name="gst_number" placeholder="ENTER GST NUMBER" maxlength="15"
+                                autocomplete="off" style="text-transform:uppercase;">
+                    
+                        </div>
+                    
+                    
+                        <!-- COMPANY TYPE -->
+                    
+                        <div class="form-group full-width">
+                    
+                            <label for="companyType">
+                                Company Constitution / Type
+                                <span class="required">*</span>
+                            </label>
+                    
+                            <select id="companyType" name="company_type">
+                    
+                                <option value="">
+                                    Select company type
+                                </option>
+                    
+                                <option>
+                                    Private Limited
+                                </option>
+                    
+                                <option>
+                                    Public Limited
+                                </option>
+                    
+                                <option>
+                                    Partnership
+                                </option>
+                    
+                                <option>
+                                    Proprietorship
+                                </option>
+                    
+                                <option>
+                                    LLP
+                                </option>
+                    
+                                <option>
+                                    Individual
+                                </option>
+                    
+                                <option>
+                                    Other
+                                </option>
+                    
+                            </select>
+                    
+                        </div>
+                    
+                    </div>
+                    
+                    </section>
+                    <!-- =================================================
+                         STEP 3 - LEAD DETAILS
+                    ================================================== -->
+
+                    <section class="form-section">
+
+                        <div class="form-section-title">
+
+                            <span class="section-number">
+                                3
+                            </span>
+
+                            <span>
+                                Lead Details
+                            </span>
+
+                        </div>
+
+
+                        <!-- DEAL AMOUNT -->
+
+                        <div class="form-group">
+
+                            <label for="dealAmount">
+
+                                Total Deal Amount
+
+                                <span class="required">*</span>
+
+                            </label>
+
+                            <input type="number" id="dealAmount" name="total_deal_amount" placeholder="₹ 0.00" min="0"
+                                step="0.01">
+
+                        </div>
+
+
+                        <!-- GST -->
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Amount Received Type
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <div class="pe-toggle" id="gstToggle">
+
+
+                                <label class="pe-opt pe-green active">
+
+                                    <input type="radio" name="gst_status" value="included" checked hidden>
+
+                                    GST Including
+
+                                </label>
+
+
+                                <label class="pe-opt pe-green">
+
+                                    <input type="radio" name="gst_status" value="excluded" hidden>
+
+                                    GST Excluding
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <!-- RECEIVED -->
+
+                            <div class="form-group">
+
+                                <label for="receivedAmount" id="receivedLabel">
+
+                                    Amount Received (Incl. GST)
+
+                                    <span class="required">*</span>
+
+                                </label>
+
+                                <input type="number" id="receivedAmount" name="received_amount" placeholder="0" min="0"
+                                    step="0.01">
+
+                            </div>
+
+
+                            <!-- GST RATE -->
+
+                            <div class="form-group">
+
+                                <label for="gstRate">
+                                    GST Rate
+                                </label>
+
+                                <select id="gstRate" name="gst_rate">
+
+                                    <option value="0">
+                                        0% GST
+                                    </option>
+
+                                    <option value="5">
+                                        5% GST
+                                    </option>
+
+                                    <option value="12">
+                                        12% GST
+                                    </option>
+
+                                    <option value="18" selected>
+                                        18% GST
+                                    </option>
+
+                                    <option value="28">
+                                        28% GST
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+                        <!-- PAYMENT STATUS -->
+                        <div class="form-group">
+                            <label>
+                                Payment Status
+                                <span class="required">*</span>
+                            </label>
+                        
+                            <div class="pe-toggle">
+                                <label class="pe-opt pe-green">
+                                    <input type="radio" name="payment_status" value="RECEIVED" hidden>
+                                    <b>RECEIVED</b>
+                                </label>
+                        
+                                <label class="pe-opt pe-blue">
+                                    <input type="radio" name="payment_status" value="PENDING" hidden>
+                                    <b>PENDING</b>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <!-- GST CARDS -->
+
+                        <div class="pe-cards">
+
+
+                            <div class="pe-card pe-card-green">
+
+                                <small>
+                                    GST Amount
+                                </small>
+
+                                <strong id="gstAmountText">
+                                    ₹ 0.00
+                                </strong>
+
+                            </div>
+
+
+                            <div class="pe-card pe-card-blue">
+
+                                <small>
+                                    Received Excl. GST
+                                </small>
+
+                                <strong id="exclText">
+                                    ₹ 0.00
+                                </strong>
+
+                            </div>
+
+
+                            <div class="pe-card pe-card-yellow pe-wide">
+
+                                <small>
+                                    Remaining Amount
+                                </small>
+
+                                <strong id="balanceText">
+                                    ₹ 0.00
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <input type="hidden" id="gstAmount" name="gst_amount">
+
+                        <input type="hidden" id="exclAmount" name="received_excl_gst">
+
+                        <input type="hidden" id="balanceAmount" name="balance_amount">
+
+                    </section>
+
+
+                    <!-- =================================================
+                         STEP 4 - BDM DETAILS
+                    ================================================== -->
+
+                    <section class="form-section">
+
+                        <div class="form-section-title">
+
+                            <span class="section-number">
+                                4
+                            </span>
+
+                            <span>
+                                BDM / BDE Details
+                            </span>
+
+                        </div>
+
+
+                    <div class="form-grid pe-grid3">
+                    
+                        <!-- BDM 1 -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="bdm1">
+                    
+                                BDM Name 1
+                    
+                                <span class="required">*</span>
+                    
+                            </label>
+                    
+                            <input type="text" id="bdm1" name="bdm_1_name" placeholder="Enter Primary BDM Name" autocomplete="off" required>
+                    
+                            <!-- Backend ke liye BDM ID -->
+                            <input type="hidden" id="bdm1Id" name="bdm_1_id">
+                    
+                        </div>
+                    
+                    
+                        <!-- BDM 2 -->
+                    
+                        <div class="form-group">
+                    
+                            <label for="bdm2">
+                    
+                                BDM Name 2
+                    
+                                <small>(opt)</small>
+                    
+                            </label>
+                    
+                            <input type="text" id="bdm2" name="bdm_2_name" placeholder="Enter Second BDM Name" autocomplete="off">
+                    
+                            <!-- Backend ke liye BDM ID -->
+                            <input type="hidden" id="bdm2Id" name="bdm_2_id">
+                    
+                        </div>
+                    
+                    </div>
+
+
+                        <!-- PAYMENT TERMS -->
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Payment Terms
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <div class="pe-toggle pe-terms">
+
+
+                                <label class="pe-opt pe-blue active">
+
+                                    <input type="radio" name="payment_percentage" value="100" checked hidden>
+
+                                    <b>
+                                        100%
+                                    </b>
+
+                                    <small>
+                                        Full Payment
+                                    </small>
+
+                                </label>
+
+
+                                <label class="pe-opt pe-blue">
+
+                                    <input type="radio" name="payment_percentage" value="50" hidden>
+
+                                    <b>
+                                        50%
+                                    </b>
+
+                                    <small>
+                                        Half &amp; Half
+                                    </small>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         STEP 5 - SERVICES
+                    ================================================== -->
+
+                    <section class="form-section">
+
+                        <div class="form-section-title">
+
+                            <span class="section-number">
+                                5
+                            </span>
+
+                            <span>
+                                Services
+                            </span>
+
+                        </div>
+
+
+                        <!-- OPEN SERVICES -->
+
+                        <button type="button" class="secondary-btn" id="openServices">
+
+                        <h3>
+                                🌟 Select Services
+                        </h3>
+                        </button>
+
+
+                        <!-- SELECTED SERVICE CHIPS -->
+
+                        <div class="pe-chips" id="serviceChips">
+
+                            <span class="pe-muted">
+                                No service selected
+                            </span>
+
+                        </div>
+
+
+                        <!-- SERVICES FIELD -->
+
+                        <input type="hidden" id="servicesField" name="services">
+
+
+                        <!-- =================================================
+                             OTHER SERVICE
+                        ================================================== -->
+
+                        <div class="form-group" id="otherServiceGroup" style="display:none; margin-top:16px;">
+
+                            <label for="otherService">
+
+                                Other Service
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+                            <input type="text" id="otherService" name="other_service" placeholder="Enter other service">
+
+                        </div>
+
+
+                        <!-- REMARKS -->
+
+                        <div class="form-group" style="margin-top:16px">
+
+                            <label for="remarks">
+                                Remarks
+                            </label>
+
+                            <textarea id="remarks" name="remarks"
+                                placeholder="Enter remarks or additional information"></textarea>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         STEP 6 - ATTACHMENTS
+                    ================================================== -->
+
+                    <section class="form-section">
+
+                        <div class="form-section-title">
+
+                            <span class="section-number">
+                                6
+                            </span>
+
+                            <span>
+                                Mandatory Attachments
+                            </span>
+
+                        </div>
+
+
+                        <div class="upload-grid">
+
+
+                            <!-- PAYMENT SCREENSHOT -->
+
+                            <div>
+
+                                <div class="upload-title">
+
+                                    Payment Screenshot
+
+                                    <span class="required">
+                                        *
+                                    </span>
+
+                                </div>
+
+
+                                <label class="upload-box" for="paymentScreenshot">
+
+                                    <div class="upload-icon">
+                                        ☁
+                                    </div>
+
+                                    <strong>
+                                        Click to upload
+                                    </strong>
+
+                                    <span>
+                                        PNG, JPG, JPEG
+                                    </span>
+
+                                    <span class="upload-file-name" id="paymentScreenshotName">
+                                    </span>
+
+                                </label>
+
+
+                                <input type="file" id="paymentScreenshot" name="payment_screenshot"
+                                    accept=".png,.jpg,.jpeg" data-filename="paymentScreenshotName" hidden>
+
+                            </div>
+
+
+                            <!-- INVOICE -->
+
+                            <div>
+
+                                <div class="upload-title">
+                                    Invoice
+                                </div>
+
+
+                                <label class="upload-box" for="invoice">
+
+                                    <div class="upload-icon">
+                                        ☁
+                                    </div>
+
+                                    <strong>
+                                        Click to upload
+                                    </strong>
+
+                                    <span>
+                                        PDF, PNG, JPG
+                                    </span>
+
+                                    <span class="upload-file-name" id="invoiceName">
+                                    </span>
+
+                                </label>
+
+
+                                <input type="file" id="invoice" name="invoice" accept=".pdf,.png,.jpg,.jpeg"
+                                    data-filename="invoiceName" hidden>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         FORM ACTIONS
+                    ================================================== -->
+
+                    <div class="form-actions">
+
+                        <button type="button" class="secondary-btn" id="resetBtn">
+
+                            Clear Form
+
+                        </button>
+
+
+                        <button type="submit" class="submit-btn">
+
+                            ➤ Submit Entry
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================================
+         SERVICES MODAL
+    ========================================================== -->
+
+    <div class="pe-modal" id="serviceModal" hidden>
+
+        <div class="pe-modal-box">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="pe-modal-head">
+
+                <div>
+
+                    <h3>
+                        ☀ Select Services
+                    </h3>
+
+                    <p>
+                        Choose all applicable services for this lead
+                    </p>
+
+                </div>
+
+
+                <button type="button" class="pe-close" id="closeServices">
+
+                    ✕
+
+                </button>
+
+            </div>
+
+
+            <!-- SERVICE LIST -->
+
+            <div class="pe-modal-body" id="serviceList">
+            </div>
+
+
+            <!-- MODAL FOOTER -->
+<div class="pe-modal-foot">
+
+    <span class="pe-service-count" id="serviceCount">
+        0 service(s) selected
+    </span>
+
+    <button type="button" class="submit-btn" id="doneServices">
+        ✓ DONE
+    </button>
+
+</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         COMMON JS
+    ========================================================== -->
+
+    <script src="js/common.js"></script>
+
+
+    <!-- =========================================================
+         PAYMENT JS
+    ========================================================== -->
+
+    <!-- PAYMENT DETAILS POPUP -->
+    <div id="paymentDetailsModal" class="payment-modal" hidden>
+        <div class="payment-modal-card">
+            <button type="button" class="payment-modal-close" data-close-modal>✕</button>
+            <div id="paymentDetailsBody"></div>
+        </div>
+    </div>
+    <script src="js/payment.js"></script>
+    <script src="js/theme.js"></script>
+
+
+    <!-- =========================================================
+         LOGO PROTECTION
+    ========================================================== -->
+
+    <script>
+
+        (function () {
+
+            function isLogoElement(target) {
+
+                if (!(target instanceof Element)) {
+                    return false;
+                }
+
+                return target.closest(
+                    ".sidebar-logo-image"
+                ) !== null;
+
+            }
+
+
+            // Disable right-click on logo
+
+            document.addEventListener(
+                "contextmenu",
+                function (event) {
+
+                    if (isLogoElement(event.target)) {
+
+                        event.preventDefault();
+
+                    }
+
+                }
+            );
+
+
+            // Disable dragging logo
+
+            document.addEventListener(
+                "dragstart",
+                function (event) {
+
+                    if (isLogoElement(event.target)) {
+
+                        event.preventDefault();
+
+                    }
+
+                }
+            );
+
+
+            // Disable selecting logo
+
+            document.addEventListener(
+                "selectstart",
+                function (event) {
+
+                    if (isLogoElement(event.target)) {
+
+                        event.preventDefault();
+
+                    }
+
+                }
+            );
+
+
+        })();
+
+    </script>
+
+
+</body>
+
+</html>

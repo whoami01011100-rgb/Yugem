@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yugem Advisory - Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="app-layout">
+
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+
+            <!-- MSME YUGEM LOGO -->
+
+            <div class="sidebar-logo-image">
+
+                <img src="images/msme-yugem-logo.jpeg" alt="MSME YUGEM" draggable="false">
+
+            </div>
+
+
+            <!-- SIDEBAR MENU -->
+
+            <nav class="sidebar-menu">
+
+
+                <a href="index.html" class="active">
+
+                    <span>▣</span>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+
+                <a href="payment-entry.html">
+
+                    <span>＋</span>
+
+                    <span>New Payment</span>
+
+                </a>
+
+
+                <a href="payment-entries.html">
+
+                    <span>▤</span>
+
+                    <span>Payment Entries</span>
+
+                </a>
+
+
+                <a href="./report.html">
+                    
+                    <span>▥</span>
+
+                    <span>Reports</span>
+
+                </a>
+
+
+                <a href="login.html" class="logout-btn">
+
+                    <span>↪</span>
+
+                    <span>Logout</span>
+
+                </a>
+
+
+            </nav>
+
+
+        </aside>
+
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+        ====================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- TOP HEADER -->
+
+            <header class="top-header">
+
+
+                <div class="top-header-left">
+
+
+                    <button type="button" class="menu-toggle" id="menuToggle">
+
+                        ☰
+
+                    </button>
+
+
+                    <h2>
+
+                        Dashboard
+
+                    </h2>
+
+
+                </div>
+
+
+
+                <div class="top-header-right">
+
+
+                    <div class="user-icon">
+
+                        👤
+
+                    </div>
+
+
+                    <span class="user-name" id="headerUserName">
+
+                        BDE User
+
+                    </span>
+
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- =====================================================
+                 CONTENT
+            ====================================================== -->
+
+            <div class="content-wrapper">
+
+
+                <h1 class="page-title">
+
+                    Dashboard
+
+                </h1>
+
+
+
+                <!-- =================================================
+                     DASHBOARD CARDS
+                ================================================== -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- TOTAL PAYMENTS -->
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-card-title">
+
+                            Total Payments
+
+                        </div>
+
+
+                        <div class="dashboard-card-value" id="totalPayments">
+
+                            0
+
+                        </div>
+
+
+                        <div class="dashboard-card-small">
+
+                            All payment entries
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TODAY'S ENTRIES -->
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-card-title">
+
+                            Today's Entries
+
+                        </div>
+
+
+                        <div class="dashboard-card-value" id="todayEntries">
+
+                            0
+
+                        </div>
+
+
+                        <div class="dashboard-card-small">
+
+                            Entries created today
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TOTAL AMOUNT -->
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-card-title">
+
+                            Total Amount
+
+                        </div>
+
+
+                        <div class="dashboard-card-value" id="totalAmount">
+
+                            ₹0.00
+
+                        </div>
+
+
+                        <div class="dashboard-card-small">
+
+                            Total payment value
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PENDING AMOUNT -->
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-card-title">
+
+                            Pending Amount
+
+                        </div>
+
+
+                        <div class="dashboard-card-value" id="pendingAmount">
+
+                            ₹0.00
+
+                        </div>
+
+
+                        <div class="dashboard-card-small">
+
+                            Outstanding amount
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     QUICK ACTIONS
+                ================================================== -->
+
+                <div class="card">
+
+
+                    <div class="card-header-row">
+
+                        <h3>
+
+                            Quick Actions
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <a href="payment-entry.html" class="quick-action">
+
+                            <span class="quick-action-icon">
+
+                                ＋
+
+                            </span>
+
+
+                            <span>
+
+                                New Payment Entry
+
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     RECENT PAYMENTS
+                ================================================== -->
+
+                <div class="card">
+
+
+                    <div class="card-header-row">
+
+                        <h3>
+
+                            Recent Payments
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="table-container">
+
+
+                        <table>
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Payment ID
+                                    </th>
+
+                                    <th>
+                                        Client
+                                    </th>
+
+                                    <th>
+                                        Service
+                                    </th>
+
+                                    <th>
+                                        Amount
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="recentPaymentsBody">
+
+
+                                <tr>
+
+                                    <td colspan="5">
+
+
+                                        <div class="empty-state">
+
+
+                                            <div class="empty-state-icon">
+
+                                                ▤
+
+                                            </div>
+
+
+                                            <h3>
+
+                                                Loading payments...
+
+                                            </h3>
+
+
+                                            <p>
+
+                                                Please wait.
+
+                                            </p>
+
+
+                                        </div>
+
+
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         COMMON JAVASCRIPT
+    ====================================================== -->
+
+
+    <script src="js/common.js"></script>
+    <script src="js/theme.js"></script>
+
+
+
+    <!-- =====================================================
+         DASHBOARD LIVE DATA
+    ====================================================== -->
+
+    <script>
+
+        (function () {
+
+
+            /* =================================================
+               ELEMENTS
+            ================================================= */
+
+            const totalPayments =
+                document.getElementById("totalPayments");
+
+
+            const todayEntries =
+                document.getElementById("todayEntries");
+
+
+            const totalAmount =
+                document.getElementById("totalAmount");
+
+
+            const pendingAmount =
+                document.getElementById("pendingAmount");
+
+
+            const recentPaymentsBody =
+                document.getElementById(
+                    "recentPaymentsBody"
+                );
+
+
+
+            /* =================================================
+               SAFETY CHECK
+            ================================================= */
+
+            if (
+                !totalPayments ||
+                !todayEntries ||
+                !totalAmount ||
+                !pendingAmount ||
+                !recentPaymentsBody
+            ) {
+
+                console.error(
+                    "Dashboard elements are missing."
+                );
+
+                return;
+
+            }
+
+
+
+            /* =================================================
+               ESCAPE HTML
+            ================================================= */
+
+            function escapeHtml(value) {
+
+                return String(value ?? "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+
+            }
+
+
+
+            /* =================================================
+               MONEY FORMAT
+            ================================================= */
+
+            function formatMoney(value) {
+
+                const amount =
+                    Number(value || 0);
+
+
+                return "₹" +
+                    amount.toLocaleString(
+                        "en-IN",
+                        {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }
+                    );
+
+            }
+
+
+
+            /* =================================================
+               TODAY CHECK
+               API DATE FORMAT = DD-MM-YYYY
+            ================================================= */
+
+            function isToday(dateString) {
+
+                if (!dateString) {
+
+                    return false;
+
+                }
+
+
+                const parts =
+                    String(dateString).split("-");
+
+
+                if (parts.length !== 3) {
+
+                    return false;
+
+                }
+
+
+                const day =
+                    Number(parts[0]);
+
+
+                const month =
+                    Number(parts[1]);
+
+
+                const year =
+                    Number(parts[2]);
+
+
+                const today =
+                    new Date();
+
+
+                return (
+                    day === today.getDate() &&
+                    month === today.getMonth() + 1 &&
+                    year === today.getFullYear()
+                );
+
+            }
+
+
+
+            /* =================================================
+               GET SERVICES
+            ================================================= */
+
+            function getServices(payment) {
+
+
+                if (
+                    Array.isArray(payment.services) &&
+                    payment.services.length > 0
+                ) {
+
+                    return payment.services
+                        .filter(Boolean)
+                        .join(", ");
+
+                }
+
+
+                if (
+                    typeof payment.services === "string" &&
+                    payment.services.trim()
+                ) {
+
+                    return payment.services;
+
+                }
+
+
+                return "—";
+
+            }
+
+
+
+            /* =================================================
+               STATUS CLASS
+            ================================================= */
+
+            function getStatusClass(status) {
+
+                const value =
+                    String(status || "")
+                        .trim()
+                        .toUpperCase();
+
+
+                if (value === "PAID") {
+
+                    return "completed";
+
+                }
+
+
+                if (
+                    value === "PARTIAL" ||
+                    value === "PENDING"
+                ) {
+
+                    return "pending";
+
+                }
+
+
+                if (
+                    value === "CANCELLED" ||
+                    value === "REJECTED"
+                ) {
+
+                    return "cancelled";
+
+                }
+
+
+                return "default";
+
+            }
+
+
+
+            /* =================================================
+               LOAD DASHBOARD
+            ================================================= */
+
+            async function loadDashboard() {
+
+
+                try {
+
+
+                    const response =
+                        await fetch(
+                            "/api/payments?_=" +
+                            Date.now(),
+                            {
+                                cache: "no-store"
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (
+                        !response.ok ||
+                        data.status !== "success"
+                    ) {
+
+                        throw new Error(
+                            data.message ||
+                            "Unable to load payments."
+                        );
+
+                    }
+
+
+                    const payments =
+                        Array.isArray(data.payments)
+                            ? data.payments
+                            : [];
+
+
+
+                    /* =========================================
+                       TOTAL PAYMENTS
+                    ========================================== */
+
+                    totalPayments.textContent =
+                        payments.length;
+
+
+
+                    /* =========================================
+                       TODAY'S ENTRIES
+                    ========================================== */
+
+                    const todayCount =
+                        payments.filter(
+                            function (payment) {
+
+                                return isToday(
+                                    payment.payment_date
+                                );
+
+                            }
+                        ).length;
+
+
+                    todayEntries.textContent =
+                        todayCount;
+
+
+
+                    /* =========================================
+                       TOTAL AMOUNT
+                    ========================================== */
+
+                    let total = 0;
+
+
+                    payments.forEach(
+                        function (payment) {
+
+                            total += Number(
+                                payment.total_amount || 0
+                            );
+
+                        }
+                    );
+
+
+                    totalAmount.textContent =
+                        formatMoney(total);
+
+
+
+                    /* =========================================
+                       PENDING AMOUNT
+                    ========================================== */
+
+                    let pending = 0;
+
+
+                    payments.forEach(
+                        function (payment) {
+
+                            pending += Number(
+                                payment.balance_amount || 0
+                            );
+
+                        }
+                    );
+
+
+                    pendingAmount.textContent =
+                        formatMoney(pending);
+
+
+
+                    /* =========================================
+                       LATEST 7 PAYMENTS
+                    ========================================== */
+
+                    const recentPayments =
+                        payments.slice(0, 7);
+
+
+                    if (!recentPayments.length) {
+
+
+                        recentPaymentsBody.innerHTML = `
+
+                            <tr>
+
+                                <td colspan="5">
+
+                                    <div class="empty-state">
+
+                                        <div class="empty-state-icon">
+                                            ▤
+                                        </div>
+
+                                        <h3>
+                                            No payment entries
+                                        </h3>
+
+                                        <p>
+                                            Payment entries will appear here.
+                                        </p>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        `;
+
+
+                        return;
+
+                    }
+
+
+
+                    /* =========================================
+                       RENDER RECENT PAYMENTS
+                    ========================================== */
+
+                    recentPaymentsBody.innerHTML =
+                        recentPayments
+                            .map(
+                                function (payment) {
+
+
+                                    const services =
+                                        getServices(payment);
+
+
+                                    const status =
+                                        payment.payment_status ||
+                                        "—";
+
+
+                                    const statusClass =
+                                        getStatusClass(status);
+
+
+                                    return `
+
+                                        <tr>
+
+                                            <td>
+
+                                                <strong>
+                                                    #${escapeHtml(
+                                        payment.payment_id
+                                    )}
+                                                </strong>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                ${escapeHtml(
+                                        payment.client_name ||
+                                        "—"
+                                    )}
+
+                                                <small style="
+                                                    display:block;
+                                                    margin-top:4px;
+                                                    color:#8b949d;
+                                                ">
+
+                                                    ${escapeHtml(
+                                        payment.company_name ||
+                                        ""
+                                    )}
+
+                                                </small>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                ${escapeHtml(
+                                        services
+                                    )}
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <strong>
+
+                                                    ${formatMoney(
+                                        payment.total_amount
+                                    )}
+
+                                                </strong>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <span
+                                                    class="dashboard-status ${statusClass}"
+                                                >
+
+                                                    ${escapeHtml(
+                                        status
+                                    )}
+
+                                                </span>
+
+                                            </td>
+
+                                        </tr>
+
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+
+                }
+
+
+                catch (error) {
+
+
+                    console.error(
+                        "Dashboard live update error:",
+                        error
+                    );
+
+
+                    recentPaymentsBody.innerHTML = `
+
+                        <tr>
+
+                            <td colspan="5">
+
+                                <div class="empty-state">
+
+                                    <div class="empty-state-icon">
+                                        ⚠
+                                    </div>
+
+                                    <h3>
+                                        Unable to load payments
+                                    </h3>
+
+                                    <p>
+                                        Please check the server connection.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+
+            }
+
+
+
+            /* =================================================
+               FIRST LOAD
+            ================================================= */
+
+            loadDashboard();
+
+
+
+            /* =================================================
+               LIVE UPDATE
+               Every 5 Seconds
+            ================================================= */
+
+            setInterval(
+                loadDashboard,
+                5000
+            );
+
+
+        })();
+
+    </script>
+
+
+
+    <!-- =====================================================
+         LOGO PROTECTION
+    ====================================================== -->
+
+    <script>
+
+
+        function isLogoElement(target) {
+
+            return (
+                target instanceof Element &&
+                target.closest(
+                    ".sidebar-logo-image"
+                ) !== null
+            );
+
+        }
+
+
+
+        /* RIGHT CLICK PROTECTION */
+
+        document.addEventListener(
+            "contextmenu",
+            function (event) {
+
+                if (
+                    isLogoElement(
+                        event.target
+                    )
+                ) {
+
+                    event.preventDefault();
+
+                }
+
+            }
+        );
+
+
+
+        /* DRAG PROTECTION */
+
+        document.addEventListener(
+            "dragstart",
+            function (event) {
+
+                if (
+                    isLogoElement(
+                        event.target
+                    )
+                ) {
+
+                    event.preventDefault();
+
+                }
+
+            }
+        );
+
+
+
+        /* SELECTION PROTECTION */
+
+        document.addEventListener(
+            "selectstart",
+            function (event) {
+
+                if (
+                    isLogoElement(
+                        event.target
+                    )
+                ) {
+
+                    event.preventDefault();
+
+                }
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

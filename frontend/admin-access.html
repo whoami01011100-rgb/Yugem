@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Access - Yugem Advisory</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =====================================================
+           ADMIN ACCESS PAGE
+           Page-specific styling only
+        ===================================================== */
+
+        .access-page {
+            padding: 30px;
+        }
+
+        .access-header {
+            margin-bottom: 25px;
+        }
+
+        .access-header h1 {
+            margin-bottom: 8px;
+        }
+
+        .access-header p {
+            color: #718096;
+        }
+
+        .access-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .access-card {
+            background: #ffffff;
+            border: 1px solid #d9e0e7;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .access-card .label {
+            color: #718096;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .access-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #102a43;
+        }
+
+        .access-table-wrapper {
+            background: #ffffff;
+            border: 1px solid #d9e0e7;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        .access-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        .access-table th {
+            background: #f4f7fa;
+            color: #102a43;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #d9e0e7;
+        }
+
+        .access-table td {
+            padding: 15px;
+            border-bottom: 1px solid #edf0f3;
+            color: #243447;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .access-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .access-table tr:hover {
+            background: #fafbfd;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-admin {
+            background: #e8f0ff;
+            color: #2457b8;
+        }
+
+        .badge-employee {
+            background: #f1f3f5;
+            color: #5f6b76;
+        }
+
+        .badge-yes {
+            background: #e7f7ef;
+            color: #16865b;
+        }
+
+        .badge-no {
+            background: #fdecec;
+            color: #c0392b;
+        }
+
+        .badge-active {
+            background: #e7f7ef;
+            color: #16865b;
+        }
+
+        .badge-inactive {
+            background: #fdecec;
+            color: #c0392b;
+        }
+
+        .pages-list {
+            line-height: 1.7;
+            color: #5f6b76;
+        }
+
+        .empty-row {
+            text-align: center;
+            padding: 35px !important;
+            color: #718096;
+        }
+
+        .loading-row {
+            text-align: center;
+            padding: 35px !important;
+            color: #718096;
+        }
+
+        .error-box {
+            display: none;
+            background: #fdecec;
+            color: #c0392b;
+            border: 1px solid #f3caca;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .access-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        /* =====================================================
+           USER MANAGEMENT MODAL
+        ===================================================== */
+
+        .user-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 42, 67, 0.45);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .user-modal.show {
+            display: flex;
+        }
+
+        .user-modal-content {
+            width: min(760px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #d9e0e7;
+            box-shadow: 0 20px 50px rgba(16, 42, 67, 0.20);
+        }
+
+        .user-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid #edf0f3;
+        }
+
+        .user-modal-header h2 {
+            margin: 0;
+            color: #102a43;
+            font-size: 20px;
+        }
+
+        .modal-close {
+            border: none;
+            background: transparent;
+            font-size: 26px;
+            line-height: 1;
+            color: #718096;
+            cursor: pointer;
+        }
+
+        .user-form {
+            padding: 24px;
+        }
+
+        .user-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .user-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .user-form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .user-form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #243447;
+        }
+
+        .user-form-group input,
+        .user-form-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px 12px;
+            border: 1px solid #d5dbe5;
+            border-radius: 8px;
+            background: #fff;
+            color: #243447;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .user-form-group input:focus,
+        .user-form-group select:focus {
+            border-color: #7c93b5;
+        }
+
+        .user-form-help {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        .page-access-form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 18px;
+            padding: 12px;
+            border: 1px solid #edf0f3;
+            border-radius: 8px;
+        }
+
+        .page-access-form label {
+            font-size: 13px;
+            color: #243447;
+        }
+
+        .user-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .user-form-actions button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-secondary {
+            border: 1px solid #d5dbe5;
+            background: #fff;
+            color: #243447;
+        }
+
+        .btn-primary {
+            border: none;
+            background: #1f3557;
+            color: #fff;
+        }
+
+        .btn-add-user {
+            border: none;
+            border-radius: 8px;
+            background: #1f3557;
+            color: #fff;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .action-btn {
+            padding: 7px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .edit-user-btn {
+            border: 1px solid #d5dbe5;
+            background: #fff;
+            color: #1f3557;
+        }
+
+        .deactivate-user-btn {
+            border: 1px solid #f3caca;
+            background: #fff;
+            color: #c0392b;
+        }
+
+        .activate-user-btn {
+            border: 1px solid #c7ead9;
+            background: #fff;
+            color: #16865b;
+        }
+
+        @media (max-width: 700px) {
+            .user-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-form-group.full-width {
+                grid-column: auto;
+            }
+
+            .page-access-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .access-page {
+                padding: 18px;
+            }
+
+            .access-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- =====================================================
+             SIDEBAR
+        ===================================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>YUGEM</h2>
+                <span>ADVISORY</span>
+            </div>
+
+            <nav class="sidebar-menu">
+
+                <a href="payment-entry.html">
+                    <span>＋</span>
+                    <span>New Payment</span>
+                </a>
+
+                <a href="index.html">
+                    <span>▣</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="payment-entries.html">
+                    <span>▤</span>
+                    <span>Payment Entries</span>
+                </a>
+
+                <a href="report.html">
+                    <span>▥</span>
+                    <span>Reports</span>
+                </a>
+
+                <!-- ADMIN ONLY -->
+                <a href="admin-access.html" class="active">
+                    <span>⚙</span>
+                    <span>User Access</span>
+                </a>
+
+                <a href="login.html" class="logout-btn">
+                    <span>↪</span>
+                    <span>Logout</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+        ===================================================== -->
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+                    <button id="menuToggle" class="menu-toggle">
+                        ☰
+                    </button>
+
+                    <h1>User Access</h1>
+                </div>
+
+                <div class="topbar-user">
+                    <span id="loggedInUserName">Admin</span>
+                </div>
+
+            </header>
+
+
+            <section class="content-wrapper">
+
+                <div class="access-page">
+
+                    <div class="access-header"
+                        style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px;">
+
+                        <div>
+                            <h1>User Access Management</h1>
+
+                            <p>
+                                Manage users, roles, page access and account status.
+                            </p>
+                        </div>
+
+                        <button type="button" id="addUserBtn" class="btn-add-user">
+                            + Add New User
+                        </button>
+
+                    </div>
+
+
+                    <div id="accessError" class="error-box"></div>
+
+
+                    <!-- =================================================
+                         SUMMARY
+                    ================================================= -->
+
+                    <div class="access-summary">
+
+                        <div class="access-card">
+                            <div class="label">
+                                Total Users
+                            </div>
+
+                            <div class="value" id="totalUsers">
+                                0
+                            </div>
+                        </div>
+
+
+                        <div class="access-card">
+                            <div class="label">
+                                Admin Access
+                            </div>
+
+                            <div class="value" id="adminUsers">
+                                0
+                            </div>
+                        </div>
+
+
+                        <div class="access-card">
+                            <div class="label">
+                                Employee Access
+                            </div>
+
+                            <div class="value" id="employeeUsers">
+                                0
+                            </div>
+                        </div>
+
+
+                        <div class="access-card">
+                            <div class="label">
+                                No Access
+                            </div>
+
+                            <div class="value" id="noAccessUsers">
+                                0
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         USER TABLE
+                    ================================================= -->
+
+                    <div class="access-table-wrapper">
+
+                        <table class="access-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Employee ID
+                                    </th>
+
+                                    <th>
+                                        Full Name
+                                    </th>
+
+                                    <th>
+                                        Login ID
+                                    </th>
+
+                                    <th>
+                                        DB Role
+                                    </th>
+
+                                    <th>
+                                        Access Role
+                                    </th>
+
+                                    <th>
+                                        Admin Access
+                                    </th>
+
+                                    <th>
+                                        Allowed Pages
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="accessTableBody">
+
+                                <tr>
+
+                                    <td colspan="9" class="loading-row">
+                                        Loading user access...
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+
+    <!-- =========================================================
+         ADD / EDIT USER MODAL
+    ========================================================= -->
+
+    <div id="userModal" class="user-modal">
+        <div class="user-modal-content">
+
+            <div class="user-modal-header">
+                <h2 id="userModalTitle">Add New User</h2>
+                <button type="button" id="closeUserModal" class="modal-close" aria-label="Close">&times;</button>
+            </div>
+
+            <form id="userForm" class="user-form">
+
+                <input type="hidden" id="editUserId">
+
+                <div class="user-form-grid">
+
+                    <div class="user-form-group">
+                        <label for="formEmployeeId">Employee ID *</label>
+                        <input type="text" id="formEmployeeId" maxlength="30" required>
+                        <span class="user-form-help" id="employeeIdHelp">Employee ID cannot be changed after the user is
+                            created.</span>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formFullName">Full Name *</label>
+                        <input type="text" id="formFullName" maxlength="100" required>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formLoginId">Login ID *</label>
+                        <input type="text" id="formLoginId" maxlength="50" required>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formContactNo">Contact No</label>
+                        <input type="text" id="formContactNo" maxlength="20">
+                        <span class="user-form-help">Optional</span>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formPassword">Password <span id="passwordRequiredMark">*</span></label>
+                        <input type="password" id="formPassword" autocomplete="new-password">
+                        <span class="user-form-help" id="passwordHelp">Required for a new user.</span>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formConfirmPassword">Confirm Password <span
+                                id="confirmPasswordRequiredMark">*</span></label>
+                        <input type="password" id="formConfirmPassword" autocomplete="new-password">
+                        <span class="user-form-help">Must match the password.</span>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formDbRole">DB Role *</label>
+                        <input type="text" id="formDbRole" maxlength="30" value="BDE" required>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formAccessRole">Access Role *</label>
+                        <select id="formAccessRole" required>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="EMPLOYEE">EMPLOYEE</option>
+                            <option value="NO_ACCESS">NO ACCESS</option>
+                        </select>
+                    </div>
+
+                    <div class="user-form-group full-width">
+                        <label>Page Access</label>
+                        <div class="page-access-form">
+                            <label><input type="checkbox" class="form-page-access" value="index.html"> Dashboard</label>
+                            <label><input type="checkbox" class="form-page-access" value="payment-entry.html"> New
+                                Payment</label>
+                            <label><input type="checkbox" class="form-page-access" value="payment-entries.html"> Payment
+                                Entries</label>
+                            <label><input type="checkbox" class="form-page-access" value="report.html"> Reports</label>
+                            <label><input type="checkbox" class="form-page-access" value="admin-access.html"> User
+                                Access</label>
+                        </div>
+                    </div>
+
+                    <div class="user-form-group">
+                        <label for="formStatus">Status *</label>
+                        <select id="formStatus" required>
+                            <option value="Y">ACTIVE</option>
+                            <option value="N">INACTIVE</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div id="userFormError" class="error-box" style="margin-top:18px; margin-bottom:0;"></div>
+
+                <div class="user-form-actions">
+                    <button type="button" id="cancelUserBtn" class="btn-secondary">Cancel</button>
+                    <button type="submit" id="saveUserBtn" class="btn-primary">Create User</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script src="js/common.js"></script>
+    <script src="js/admin-access.js"></script>
+    <script src="js/theme.js"></script>
+
+</body>
+
+</html>

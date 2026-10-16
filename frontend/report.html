@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yugem Advisory - Reports</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <style>
+        /* =====================================================
+           REPORT PAGE
+        ===================================================== */
+
+        .report-page-header {
+            color: var(--navy);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+
+        .report-page-subtitle {
+            color: #7b858f;
+            font-size: 12px;
+            margin-bottom: 22px;
+        }
+
+
+        /* =====================================================
+           FILTER
+        ===================================================== */
+
+        .report-filter-card {
+            background: #ffffff;
+            border: 1px solid #dfe5eb;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow:
+                0 2px 8px rgba(16, 42, 67, 0.04);
+        }
+
+
+        .report-filter-title {
+            color: var(--navy);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+
+        .report-filter-description {
+            color: #7b858f;
+            font-size: 11px;
+            margin-bottom: 18px;
+        }
+
+
+        /* =====================================================
+           PRESET BUTTONS
+        ===================================================== */
+
+        #presetRow {
+            display: flex !important;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 9px !important;
+            margin-top: 16px !important;
+        }
+
+
+        .preset-pill {
+            appearance: none;
+            -webkit-appearance: none;
+
+            border: 1px solid #d4dde6;
+
+            background: #ffffff;
+
+            color: #405568;
+
+            padding: 9px 16px;
+
+            border-radius: 7px;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.15s ease;
+        }
+
+
+        .preset-pill:hover {
+            background: #f3f6f8;
+
+            border-color: #aebdca;
+
+            color: var(--navy);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 2px 5px rgba(16, 42, 67, 0.08);
+        }
+
+
+        .preset-pill:active {
+            transform: translateY(0);
+        }
+
+
+        .preset-pill.active {
+            background: var(--navy);
+
+            border-color: var(--navy);
+
+            color: #ffffff;
+
+            box-shadow:
+                0 3px 8px rgba(16, 42, 67, 0.18);
+        }
+
+
+        .preset-pill.active:hover {
+            background: var(--navy-light);
+
+            border-color: var(--navy-light);
+
+            color: #ffffff;
+        }
+
+
+        .preset-pill:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+
+        /* =====================================================
+           ACTION BUTTONS
+        ===================================================== */
+
+        .report-buttons {
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 20px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .report-buttons button {
+            min-width: 125px;
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .report-summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .report-summary-card {
+            background: #ffffff;
+
+            border: 1px solid #dfe5eb;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            min-height: 105px;
+
+            box-shadow:
+                0 2px 8px rgba(16, 42, 67, 0.04);
+        }
+
+
+        .report-summary-title {
+            color: #7b858f;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.3px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .report-summary-value {
+            color: var(--navy);
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+
+        .report-summary-small {
+            color: #8d969f;
+
+            font-size: 9px;
+
+            margin-top: 7px;
+        }
+
+
+        /* =====================================================
+           GST
+        ===================================================== */
+
+        .gst-card {
+            background: #ffffff;
+
+            border: 1px solid #dfe5eb;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 2px 8px rgba(16, 42, 67, 0.04);
+        }
+
+
+        .gst-title {
+            color: var(--navy);
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .gst-description {
+            color: #7b858f;
+
+            font-size: 10px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .gst-value {
+            color: var(--navy);
+
+            font-size: 21px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           TABLE CARDS
+        ===================================================== */
+
+        .report-table-card {
+            background: #ffffff;
+
+            border: 1px solid #dfe5eb;
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 2px 8px rgba(16, 42, 67, 0.04);
+        }
+
+
+        .report-table-title {
+            color: var(--navy);
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .report-table-description {
+            color: #7b858f;
+
+            font-size: 10px;
+
+            margin-bottom: 17px;
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .report-table-card .table-container {
+            width: 100%;
+
+            overflow-x: auto;
+
+            border: 1px solid #e3e8ed;
+
+            border-radius: 9px;
+        }
+
+
+        .report-table-card table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 560px;
+
+            background: #ffffff;
+        }
+
+
+        .report-table-card thead th {
+            background: #f2f5f8;
+
+            color: #30465a;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.35px;
+
+            padding: 13px 15px;
+
+            border-bottom:
+                1px solid #dfe5eb;
+
+            white-space: nowrap;
+        }
+
+
+        .report-table-card tbody td {
+            padding: 13px 15px;
+
+            font-size: 12px;
+
+            color: #425466;
+
+            border-bottom:
+                1px solid #edf0f3;
+
+            vertical-align: middle;
+        }
+
+
+        .report-table-card tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        .report-table-card tbody tr:hover {
+            background: #fafcfd;
+        }
+
+
+        .report-table-card th:first-child,
+        .report-table-card td:first-child {
+            text-align: left;
+        }
+
+
+        .report-table-card th:not(:first-child),
+        .report-table-card td:not(:first-child) {
+            text-align: right;
+        }
+
+
+        .num {
+            text-align: right !important;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           BDE
+        ===================================================== */
+
+        .bde-name {
+            font-weight: 600;
+
+            color: var(--navy) !important;
+        }
+
+
+        .money-strong {
+            font-weight: 600;
+
+            color: #233f59 !important;
+        }
+
+
+        .received-val {
+            color: #16865b !important;
+
+            font-weight: 600;
+        }
+
+
+        .balance-val {
+            color: #c47a18 !important;
+
+            font-weight: 600;
+        }
+
+
+        .total-row td {
+            background: #f7f9fb !important;
+
+            color: var(--navy) !important;
+
+            font-weight: 700 !important;
+
+            border-top:
+                2px solid #dce3e9;
+        }
+
+
+        /* =====================================================
+           SERVICE SUMMARY
+        ===================================================== */
+
+        #byService td:first-child {
+            width: 72%;
+        }
+
+
+        #byService td:last-child {
+            width: 28%;
+        }
+
+
+        .service-cell {
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            width: 100%;
+        }
+
+
+        .service-cell b {
+            width: 190px;
+
+            min-width: 190px;
+
+            color: #34495e;
+
+            font-weight: 600;
+
+            text-align: left;
+
+            white-space: nowrap;
+        }
+
+
+        .service-bar {
+            flex: 1;
+
+            height: 7px;
+
+            background: #e8edf1;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            max-width: 380px;
+        }
+
+
+        .service-bar i {
+            display: block;
+
+            height: 100%;
+
+            background: var(--navy);
+
+            border-radius: 10px;
+
+            min-width: 8px;
+        }
+
+
+        /* =====================================================
+           PAYMENT STATUS
+        ===================================================== */
+
+        #byStatus td:first-child {
+            width: 72%;
+        }
+
+
+        #byStatus td:last-child {
+            width: 28%;
+        }
+
+
+        .status-pill {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 82px;
+
+            padding: 5px 12px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .status-pill.completed {
+            color: #16734e;
+
+            background: #e8f6ef;
+
+            border:
+                1px solid #ccebdc;
+        }
+
+
+        .status-pill.pending {
+            color: #99620d;
+
+            background: #fff5df;
+
+            border:
+                1px solid #f1dfb8;
+        }
+
+
+        .status-pill.cancelled {
+            color: #a62f25;
+
+            background: #fcebea;
+
+            border:
+                1px solid #f1cfcc;
+        }
+
+
+        .status-pill.default {
+            color: #526477;
+
+            background: #eef2f5;
+
+            border:
+                1px solid #dce3e9;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .report-table-card .empty-state {
+            min-height: 150px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 25px;
+        }
+
+
+        .report-table-card .empty-state-icon {
+            color: #9aa7b2;
+
+            font-size: 24px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .report-table-card .empty-state h3 {
+            margin: 8px 0 4px;
+
+            color: var(--navy);
+
+            font-size: 13px;
+        }
+
+
+        .report-table-card .empty-state p {
+            margin: 0;
+
+            color: #8a96a1;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           SKELETON
+        ===================================================== */
+
+        .skeleton {
+            height: 11px;
+
+            width: 70%;
+
+            background:
+                linear-gradient(90deg,
+                    #edf1f4 25%,
+                    #f7f9fa 50%,
+                    #edf1f4 75%);
+
+            background-size: 200% 100%;
+
+            border-radius: 5px;
+
+            animation:
+                reportSkeleton 1.3s infinite;
+        }
+
+
+        @keyframes reportSkeleton {
+
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        #toastStack {
+            position: fixed;
+
+            right: 20px;
+
+            bottom: 20px;
+
+            z-index: 99999;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+
+        .report-toast {
+            background: #102a43;
+
+            color: #ffffff;
+
+            padding: 11px 16px;
+
+            border-radius: 7px;
+
+            font-size: 11px;
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.15);
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+            transition:
+                opacity 0.3s ease,
+                transform 0.3s ease;
+        }
+
+
+        .report-toast.success {
+            background: #16865b;
+        }
+
+
+        .report-toast.error {
+            background: #c0392b;
+        }
+
+
+        .report-toast.hide {
+            opacity: 0;
+
+            transform:
+                translateY(10px);
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .sidebar-logo-image {
+            height: 120px;
+
+            border-bottom:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.1);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+
+        .sidebar-logo-image img {
+            width: 105px;
+
+            height: 105px;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .report-summary {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .report-summary {
+                grid-template-columns: 1fr;
+            }
+
+
+            .report-table-card {
+                padding: 15px;
+            }
+
+
+            .report-filter-card {
+                padding: 15px;
+            }
+
+
+            .report-buttons {
+                justify-content: stretch;
+
+                flex-direction: column;
+            }
+
+
+            .report-buttons button {
+                width: 100%;
+            }
+
+
+            .service-cell {
+                min-width: 480px;
+            }
+
+
+            #presetRow {
+                gap: 7px !important;
+            }
+
+
+            .preset-pill {
+                padding:
+                    8px 12px;
+
+                font-size: 10px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .report-page-header {
+                font-size: 20px;
+            }
+
+
+            .report-page-subtitle {
+                font-size: 11px;
+            }
+
+
+            .report-summary-card {
+                padding: 16px;
+            }
+
+
+            .report-summary-value {
+                font-size: 19px;
+            }
+
+
+            .preset-pill {
+                flex: 1 1 auto;
+
+                text-align: center;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="app-layout">
+
+
+        <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+
+            <div class="sidebar-logo-image">
+
+                <img src="images/msme-yugem-logo.jpeg" alt="MSME YUGEM" draggable="false">
+
+            </div>
+
+
+            <nav class="sidebar-menu">
+
+
+                <a href="index.html">
+
+                    <span>▣</span>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+
+                <a href="payment-entry.html">
+
+                    <span>＋</span>
+
+                    <span>New Payment</span>
+
+                </a>
+
+
+                <a href="payment-entries.html">
+
+                    <span>▤</span>
+
+                    <span>Payment Entries</span>
+
+                </a>
+
+
+                <a href="report.html" class="active">
+
+                    <span>▥</span>
+
+                    <span>Reports</span>
+
+                </a>
+
+
+                <a href="login.html" class="logout-btn">
+
+                    <span>↪</span>
+
+                    <span>Logout</span>
+
+                </a>
+
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- HEADER -->
+
+            <header class="top-header">
+
+
+                <div class="top-header-left">
+
+
+                    <button type="button" class="menu-toggle" id="menuToggle">
+                        ☰
+                    </button>
+
+
+                    <h2>
+                        Reports
+                    </h2>
+
+
+                </div>
+
+
+                <div class="top-header-right">
+
+
+                    <div class="user-icon">
+                        👤
+                    </div>
+
+
+                    <span class="user-name" id="headerUserName">
+                        BDE User
+                    </span>
+
+
+                </div>
+
+
+            </header>
+
+
+            <!-- CONTENT -->
+
+            <div class="content-wrapper">
+
+
+                <!-- PAGE TITLE -->
+
+                <h1 class="report-page-header">
+                    Payment Reports
+                </h1>
+
+
+                <div class="report-page-subtitle">
+                    Analyze payment entries, BDE performance,
+                    services and payment status.
+                </div>
+
+
+                <!-- =================================================
+                 FILTER
+            ================================================== -->
+
+                <section class="report-filter-card">
+
+
+                    <div class="report-filter-title">
+                        Report Filters
+                    </div>
+
+
+                    <div class="report-filter-description">
+                        Select a date range to filter the report.
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label for="rFrom">
+                                From Date
+                            </label>
+
+
+                            <input type="date" id="rFrom">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="rTo">
+                                To Date
+                            </label>
+
+
+                            <input type="date" id="rTo">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- PRESETS -->
+
+                    <div id="presetRow"></div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="report-buttons">
+
+
+                        <button type="button" id="applyBtn" class="submit-btn">
+                            Apply Filter
+                        </button>
+
+
+                        <button type="button" id="resetBtn" class="secondary-btn">
+                            Reset
+                        </button>
+
+
+                        <button type="button" id="exportBtn" class="submit-btn">
+                            Export Excel
+                        </button>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                 SUMMARY
+            ================================================== -->
+
+                <div class="report-summary">
+
+
+                    <div class="report-summary-card">
+
+                        <div class="report-summary-title">
+                            Total Entries
+                        </div>
+
+
+                        <div class="report-summary-value" id="sEntries">
+                            0
+                        </div>
+
+
+                        <div class="report-summary-small">
+                            Payment entries
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-summary-card">
+
+                        <div class="report-summary-title">
+                            Total Deal
+                        </div>
+
+
+                        <div class="report-summary-value" id="sDeal">
+                            ₹0.00
+                        </div>
+
+
+                        <div class="report-summary-small">
+                            Total payment value
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-summary-card">
+
+                        <div class="report-summary-title">
+                            Received Amount
+                        </div>
+
+
+                        <div class="report-summary-value" id="sReceived">
+                            ₹0.00
+                        </div>
+
+
+                        <div class="report-summary-small">
+                            Amount received
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-summary-card">
+
+                        <div class="report-summary-title">
+                            Balance Amount
+                        </div>
+
+
+                        <div class="report-summary-value" id="sBalance">
+                            ₹0.00
+                        </div>
+
+
+                        <div class="report-summary-small">
+                            Outstanding amount
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                 GST
+            ================================================== -->
+
+                <section class="gst-card">
+
+
+                    <div class="gst-title">
+                        GST Summary
+                    </div>
+
+
+                    <div class="gst-description" id="gstCaption">
+                        Total GST amount included in the selected report period.
+                    </div>
+
+
+                    <div class="gst-value" id="sGst">
+                        GST ₹0.00
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                 BDE PERFORMANCE
+            ================================================== -->
+
+                <section class="report-table-card">
+
+
+                    <div class="report-table-title">
+                        BDE Performance
+                    </div>
+
+
+                    <div class="report-table-description">
+                        Payment and collection summary by BDE.
+                    </div>
+
+
+                    <div class="table-container">
+
+
+                        <table>
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        BDE Name
+                                    </th>
+
+                                    <th>
+                                        Entries
+                                    </th>
+
+                                    <th>
+                                        Total Deal
+                                    </th>
+
+                                    <th>
+                                        Received
+                                    </th>
+
+                                    <th>
+                                        Balance
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="byBde">
+
+                                <tr>
+
+                                    <td colspan="5">
+
+                                        <div class="empty-state">
+
+                                            <p>
+                                                Loading report...
+                                            </p>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+
+                            <tbody id="byBdeTotals" style="display:none;">
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                 SERVICE SUMMARY
+            ================================================== -->
+
+                <section class="report-table-card">
+
+
+                    <div class="report-table-title">
+                        Service Summary
+                    </div>
+
+
+                    <div class="report-table-description">
+                        Number of payment entries by service.
+                    </div>
+
+
+                    <div class="table-container">
+
+
+                        <table>
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Service
+                                    </th>
+
+                                    <th>
+                                        Entries
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="byService">
+
+                                <tr>
+
+                                    <td colspan="2">
+
+                                        <div class="empty-state">
+
+                                            <p>
+                                                Loading report...
+                                            </p>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                 PAYMENT STATUS
+            ================================================== -->
+
+                <section class="report-table-card">
+
+
+                    <div class="report-table-title">
+                        Payment Status
+                    </div>
+
+
+                    <div class="report-table-description">
+                        Payment entries grouped by current status.
+                    </div>
+
+
+                    <div class="table-container">
+
+
+                        <table>
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Entries
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="byStatus">
+
+                                <tr>
+
+                                    <td colspan="2">
+
+                                        <div class="empty-state">
+
+                                            <p>
+                                                Loading report...
+                                            </p>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </section>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- =========================================================
+     TOAST
+========================================================= -->
+
+    <div id="toastStack"></div>
+
+
+    <!-- =========================================================
+     JS
+========================================================= -->
+
+    <script src="js/common.js"></script>
+
+    <script src="js/theme.js"></script>
+
+    <script src="js/report.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yugem Advisory - Payment Entries</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =========================
+           PAYMENT ENTRIES
+           ========================= */
+
+        .history-toolbar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .history-toolbar input,
+        .history-toolbar select {
+            padding: 11px 14px;
+            border: 1px solid #d9dfe8;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .history-toolbar input {
+            min-width: 280px;
+            flex: 1;
+        }
+
+        .history-toolbar input:focus,
+        .history-toolbar select:focus {
+            border-color: #4f46e5;
+        }
+
+        .history-toolbar button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        #searchBtn {
+            background: #4f46e5;
+            color: white;
+        }
+
+        #clearSearchBtn {
+            background: #eef1f6;
+            color: #333;
+        }
+
+        /* =========================
+           TABLE
+           ========================= */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .payment-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        .payment-table th,
+        .payment-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #edf0f4;
+            text-align: left;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .payment-table th {
+            background: #f7f8fb;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .payment-table tbody tr:hover {
+            background: #fafbff;
+        }
+
+        .empty-row {
+            text-align: center !important;
+            padding: 35px !important;
+            color: #6b7280;
+        }
+
+        /* =========================
+           PAYMENT MODAL
+           ========================= */
+
+        .payment-modal,
+        .image-viewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /*
+           payment.js uses:
+           modal.hidden = false
+        */
+        .payment-modal:not([hidden]),
+        .image-viewer:not([hidden]) {
+            display: flex;
+        }
+
+        .payment-modal-box {
+            width: min(1050px, 100%);
+            max-height: 92vh;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .payment-modal-header {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-modal-header h3 {
+            margin: 0;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: #f1f3f6;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .modal-close:hover {
+            background: #e5e7eb;
+        }
+
+        .payment-details {
+            padding: 22px;
+        }
+
+        /* =========================
+           DETAILS
+           ========================= */
+
+        .payment-detail-section {
+            margin-bottom: 25px;
+        }
+
+        .payment-detail-section h3 {
+            margin: 0 0 14px;
+            padding-bottom: 9px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 17px;
+            color: #1f2937;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .detail-item {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .detail-label {
+            display: block;
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .detail-item strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+            word-break: break-word;
+        }
+
+        /* =========================
+           SERVICES
+           ========================= */
+
+        .detail-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pe-chip {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 7px 11px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* =========================
+           REMARKS
+           ========================= */
+
+        .payment-detail-section p {
+            margin: 0;
+            padding: 14px;
+            background: #f8fafc;
+            border-radius: 8px;
+            color: #374151;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* =========================
+           ATTACHMENTS
+           ========================= */
+
+        .attachment-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .attachment-actions .secondary-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* =========================
+           IMAGE VIEWER
+           ========================= */
+
+        .image-viewer-box {
+            position: relative;
+            max-width: 95vw;
+            max-height: 95vh;
+            background: #111;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .image-viewer-box img {
+            display: block;
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .image-viewer-close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 2;
+        }
+
+        .image-viewer-close:hover {
+            background: #fff;
+        }
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 800px) {
+            .detail-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 550px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .history-toolbar input {
+                min-width: 100%;
+            }
+        }
+        /* =========================================================
+   PAYMENT HISTORY - ACTION BUTTON
+   ========================================================= */
+
+.btn-view-payment {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 58px;
+    height: 36px;
+
+    padding: 0 14px;
+
+    border: 1px solid #4f46e5;
+    border-radius: 7px;
+
+    background: #4f46e5;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn-view-payment:hover {
+    background: #4338ca;
+    border-color: #4338ca;
+
+    box-shadow:
+        0 4px 10px rgba(79, 70, 229, 0.22);
+
+    transform: translateY(-1px);
+}
+
+.btn-view-payment:active {
+    transform: translateY(0);
+}
+
+.btn-view-payment:focus {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.18);
+}
+
+
+/* =========================================================
+   PAYMENT DETAILS MODAL
+   ========================================================= */
+
+.payment-details-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 24px 28px 30px;
+
+    color: #1f2937;
+}
+
+
+/* =========================================================
+   PAYMENT DETAILS HEADER
+   ========================================================= */
+
+.payment-details-header {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.payment-details-header h2 {
+    margin: 0 0 6px;
+
+    color: #172b4d;
+
+    font-size: 26px;
+    font-weight: 700;
+
+    line-height: 1.25;
+}
+
+.payment-details-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+.payment-details-header p strong {
+    color: #111827;
+}
+
+
+/* =========================================================
+   EDIT / DELETE BUTTONS
+   ========================================================= */
+
+.payment-detail-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+.btn-edit-payment,
+.btn-delete-payment {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    padding: 0 15px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
+}
+
+.btn-edit-payment {
+    border: 1px solid #4f46e5;
+
+    background: #4f46e5;
+
+    color: #ffffff;
+}
+
+.btn-edit-payment:hover {
+    background: #4338ca;
+    border-color: #4338ca;
+
+    box-shadow:
+        0 4px 10px rgba(79, 70, 229, 0.20);
+
+    transform: translateY(-1px);
+}
+
+.btn-delete-payment {
+    border: 1px solid #dc2626;
+
+    background: #ffffff;
+
+    color: #dc2626;
+}
+
+.btn-delete-payment:hover {
+    background: #dc2626;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 4px 10px rgba(220, 38, 38, 0.18);
+
+    transform: translateY(-1px);
+}
+
+.btn-edit-payment:active,
+.btn-delete-payment:active {
+    transform: translateY(0);
+}
+
+.btn-edit-payment:focus,
+.btn-delete-payment:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   DETAIL SECTION
+   ========================================================= */
+
+.payment-detail-section {
+    margin-bottom: 24px;
+
+    padding: 0;
+}
+
+.payment-detail-section h3 {
+    margin: 0 0 14px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #1f2937;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DETAIL ROWS
+   ========================================================= */
+
+.payment-detail-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 220px)
+        minmax(0, 1fr);
+
+    align-items: center;
+
+    min-height: 48px;
+
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.payment-detail-row:last-child {
+    border-bottom: none;
+}
+
+.payment-detail-label {
+    padding: 12px 14px 12px 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.payment-detail-value {
+    padding: 12px 14px;
+
+    border-radius: 6px;
+
+    background: #f8fafc;
+
+    color: #111827;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+
+.payment-services-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    padding: 14px;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf0f4;
+}
+
+.payment-services-list .pe-chip {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    background: #eef2ff;
+
+    color: #4338ca;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   REMARKS
+   ========================================================= */
+
+.payment-remarks {
+    min-height: 50px;
+
+    padding: 14px 16px;
+
+    border: 1px solid #edf0f4;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    color: #374151;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ATTACHMENTS
+   ========================================================= */
+
+.payment-attachments {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.payment-attachment {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+}
+
+.payment-attachment span {
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    word-break: break-word;
+}
+
+.payment-attachment a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    padding: 7px 13px;
+
+    border-radius: 6px;
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+.payment-attachment a:hover {
+    background: #4338ca;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   STATUS BADGE
+   ========================================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 5px;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #eef2ff;
+
+    color: #4338ca;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   MODAL SCROLLBAR
+   ========================================================= */
+
+.payment-modal-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.payment-modal-box::-webkit-scrollbar-track {
+    background: #f1f3f5;
+}
+
+.payment-modal-box::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.payment-modal-box::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .payment-details-wrapper {
+        padding: 18px;
+    }
+
+    .payment-details-header {
+        flex-direction: column;
+    }
+
+    .payment-detail-actions {
+        width: 100%;
+    }
+
+    .btn-edit-payment,
+    .btn-delete-payment {
+        flex: 1;
+    }
+
+    .payment-detail-row {
+        grid-template-columns: 1fr;
+
+        padding: 8px 0;
+    }
+
+    .payment-detail-label {
+        padding: 5px 0;
+
+        font-size: 12px;
+    }
+
+    .payment-detail-value {
+        padding: 10px 12px;
+    }
+
+    .payment-attachment {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .payment-attachment a {
+        width: 100%;
+    }
+}
+    </style>
+    
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- =========================
+             SIDEBAR
+             ========================= -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-logo">
+                <div class="sidebar-brand-mark">◇</div>
+                <h1>YUGEM</h1>
+                <span>ADVISORY</span>
+            </div>
+
+            <nav class="sidebar-menu">
+
+                <a href="payment-entry.html">
+                    <span>＋</span>
+                    <span>New Payment</span>
+                </a>
+
+                <a href="index.html">
+                    <span>▣</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="payment-entries.html" class="active">
+                    <span>▤</span>
+                    <span>Payment Entries</span>
+                </a>
+
+                <a href="report.html">
+                    <span>▥</span>
+                    <span>Reports</span>
+                </a>
+
+                <a href="login.html" class="logout-btn">
+                    <span>↪</span>
+                    <span>Logout</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =========================
+             MAIN CONTENT
+             ========================= -->
+
+        <main class="main-content">
+
+            <header class="top-header">
+
+                <div class="top-header-left">
+
+                    <button type="button" class="menu-toggle" id="menuToggle">
+                        ☰
+                    </button>
+
+                    <h2>Payment Entries</h2>
+
+                </div>
+
+                <div class="top-header-right">
+
+                    <div class="user-icon">👤</div>
+
+                    <span class="user-name" id="headerUserName">
+                        BDE User
+                    </span>
+
+                </div>
+
+            </header>
+
+
+            <div class="content-wrapper">
+
+                <!-- =========================
+                     PAGE TITLE
+                     ========================= -->
+
+                <div style="margin-bottom: 20px;">
+
+                    <h2 style="margin: 0 0 6px;">
+                        Payment Entries
+                    </h2>
+
+                    <p style="margin: 0; color: #6b7280;">
+                        View all payments saved in Yugem Advisory.
+                    </p>
+
+                </div>
+
+
+                <!-- =========================
+                     SEARCH / FILTER
+                     ========================= -->
+
+                <div class="history-toolbar">
+
+                    <input type="text" id="searchInput" placeholder="Search payment, client, company, employee ID...">
+
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="RECEIVED">Received</option>
+                        <option value="PENDING">Pending</option>
+                    </select>
+
+                    <button type="button" id="searchBtn">
+                        Search
+                    </button>
+
+                    <button type="button" id="clearSearchBtn">
+                        Clear
+                    </button>
+
+                </div>
+            <div class="selection-toolbar" id="selectionToolbar" hidden>
+                <span>
+                    <strong id="selectedCount">0</strong> payments selected
+                </span>
+            
+                <div>
+                    <button type="button" id="clearSelectionBtn">
+                        Clear
+                    </button>
+            
+                    <button type="button" id="deleteSelectedBtn" class="bulk-delete-btn">
+                        Delete Selected
+                    </button>
+                </div>
+            </div>
+
+                <!-- =========================
+                     PAYMENT TABLE
+                     ========================= -->
+
+                <div class="table-wrapper">
+
+                    <table class="payment-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAllPayments">
+                                    </th>
+                                
+                                    <th>Payment ID</th>
+
+                                <th>Date</th>
+
+                                <th>Client</th>
+
+                                <th>Company</th>
+
+                                <th>Total Amount</th>
+
+                                <th>Received</th>
+
+                                <th>Balance</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="paymentTableBody">
+
+                            <tr>
+
+                                <td colspan="8" class="empty-row">
+                                    Loading payments...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAYMENT DETAILS MODAL
+         ===================================================== -->
+
+    <div class="payment-modal" id="paymentModal" hidden>
+
+        <div class="payment-modal-box">
+
+            <div class="payment-modal-header">
+
+                <h3>
+                    Payment Details
+                </h3>
+
+                <button type="button" class="modal-close" id="closePaymentModal" onclick="closePaymentModal()">
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="payment-details" id="paymentDetails">
+
+                <!-- payment.js fills this -->
+
+            </div>
+
+        </div>
+
+    </div>
+    
+
+
+    <!-- =====================================================
+         IMAGE VIEWER
+         ===================================================== -->
+
+    <div class="image-viewer" id="imageViewer" hidden>
+
+        <div class="image-viewer-box">
+
+            <button type="button" class="image-viewer-close" id="closeImageViewer" onclick="closeImageViewer()">
+                ✕
+            </button>
+
+            <img id="largePaymentImage" src="" alt="Payment Screenshot">
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SCRIPTS
+         ===================================================== -->
+
+    <script src="js/common.js"></script>
+    <script src="js/theme.js"></script>
+
+    <script src="js/payment.js"></script>
+
+</body>
+
+</html>
